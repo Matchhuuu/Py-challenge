@@ -1,0 +1,102 @@
+# Define a Property class to represent a real estate property
+class Property:
+    def __init__(self, address, rent):
+        self.address = address
+        self.rent = rent
+        self.tenants = []
+    
+    def add_tenant(self, tenant):
+        self.tenants.append(tenant)
+    
+    def remove_tenant(self, tenant):
+        self.tenants.remove(tenant)
+    
+    def get_rent_due(self):
+        return len(self.tenants) * self.rent
+
+# Define a Tenant class to represent a tenant living in a real estate property
+class Tenant:
+    def __init__(self, name, phone):
+        self.name = name
+        self.phone = phone
+
+# Define a list of properties and a list of tenants
+properties = [
+    Property('123 Main St', 1000),
+    Property('456 Elm St', 800),
+    Property('789 Oak St', 1200),
+]
+tenants = [
+    Tenant('Alice', '555-1234'),
+    Tenant('Bob', '555-5678'),
+    Tenant('Charlie', '555-9012'),
+]
+
+# Display a welcome message
+print('Welcome to the real estate accounting system!')
+
+# Loop until the user decides to quit
+while True:
+    # Display a menu of options
+    print('\nMenu:')
+    print('1. Add property')
+    print('2. Add tenant')
+    print('3. Remove tenant')
+    print('4. Calculate rent due')
+    print('5. Generate report')
+    print('6. Quit')
+    
+    # Ask the user what they would like to do
+    choice = input('\nEnter the number of the option you would like to select: ')
+    
+    if choice == '1':
+        # Ask the user for the address and rent of the new property
+        address = input('\nEnter the address of the property: ')
+        rent = input('Enter the monthly rent of the property: ')
+        
+        # Check if the rent is a valid integer
+        try:
+            rent = int(rent)
+        except ValueError:
+            print('Sorry, rent must be a valid integer.')
+            continue
+        
+        # Add the property to the list of properties
+        properties.append(Property(address, rent))
+        
+        # Display a confirmation message
+        print(f'Property at {address} added.')
+    
+    elif choice == '2':
+        # Ask the user for the name and phone number of the new tenant
+        name = input('\nEnter the name of the tenant: ')
+        phone = input('Enter the phone number of the tenant: ')
+        
+        # Add the tenant to the list of tenants
+        tenants.append(Tenant(name, phone))
+        
+        # Display a confirmation message
+        print(f'Tenant {name} added.')
+    
+    elif choice == '3':
+        # Ask the user for the name of the tenant to remove
+        name = input('\nEnter the name of the tenant to remove: ')
+        
+        # Find the tenant in the list of tenants
+        tenant = None
+        for t in tenants:
+            if t.name == name:
+                tenant = t
+                break
+        
+        # Remove the tenant from any properties they are living in
+        if tenant is not None:
+            for p in properties:
+                if tenant in p.tenants:
+                    p.remove_tenant(tenant)
+            tenants.remove(tenant)
+            print(f'Tenant {name} removed.')
+        else:
+            print(f'Sorry, {name} is not a valid tenant.')
+    
+    elif choice == '4':
