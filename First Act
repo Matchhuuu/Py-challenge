@@ -1,0 +1,61 @@
+class Node:
+    # Singly linked node
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+class singly_linked_list:
+    def __init__(self):
+        # Createe an empty list
+        self.head = None
+        self.tail = None
+        self.count = 0
+    def iterate_item(self):
+        # Iterate the list.
+        current_item = self.head
+        while current_item:
+            val = current_item.data
+            current_item = current_item.next
+            yield val
+    def append_item(self, data):
+        #Append items on the list
+        node = Node(data)
+        if self.tail:
+            self.tail.next = node
+            self.tail = node
+        else:
+            self.head = node
+            self.tail = node
+        self.count += 1
+        
+    def addTwoLists(self, list1, list2):
+        str_l1, str_l2 = '', ''
+        while list1:
+            str_l1 += str(list1.data)
+            list1 = list1.next
+        while list2:            
+            str_l2 += str(list2.data)
+            list2 = list2.next
+        int_l1 = int(str_l1[::-1])
+        int_l2 = int(str_l2[::-1])       
+        return list(map(int, str(int_l1 + int_l2)[::-1])) 
+    
+list1 = singly_linked_list()
+list1.append_item(5)
+list1.append_item(4)
+list1.append_item(3)
+list1.append_item(1)
+list1.append_item(2)
+#--------------------------
+list2 = singly_linked_list()
+list2.append_item(4)
+list2.append_item(2)
+list2.append_item(1)
+print("Linked list1:")
+for val in list1.iterate_item():
+    print(val, end = " ")
+print("\nLinked list2:")
+for val in list2.iterate_item():
+    print(val, end = " ")
+
+res = singly_linked_list()
+print("\n\nResult: ",res.addTwoLists(list1.head, list2.head))
